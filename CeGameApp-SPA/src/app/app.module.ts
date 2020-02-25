@@ -13,6 +13,8 @@ import { CharacterComponent } from './users/character/character.component';
 import { CharacterListComponent } from './users/character/character-list/character-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomepageComponent } from './homepage/homepage.component';
+import { DropdownDirective } from './shared/dropdown.directive';
+import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { HomepageComponent } from './homepage/homepage.component';
     RegistrationpageComponent,
     CharacterComponent,
     CharacterListComponent,
-    HomepageComponent
+    HomepageComponent,
+    DropdownDirective,
+    SignInPageComponent
   ],
   imports: [
     BrowserModule,
