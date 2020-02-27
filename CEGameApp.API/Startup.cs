@@ -24,6 +24,7 @@ namespace CEGameApp.API
                 (Configuration.GetConnectionString("DefaultConnection")));//this will be changed when uploading to azure
             services.AddControllers();
             services.AddCors();
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
