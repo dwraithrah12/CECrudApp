@@ -1,4 +1,19 @@
-<h1>Sign-In Page</h1>>
-<p>Sign in form</p>
-<button routerLink='/user/1' class="btn btn-primary">Sign-In!</button>
-<button routerLink='/registrationpage' class="btn btn-success">Don't have an account? Register!</button>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Sign-In</h1>
+            <form #f="ngForm" (ngSubmit)="onSubmit()">
+                <p>
+                    <label>User Name: </label>
+                    <input type="text" required><!-- Add [(ngModel)]="user.userName" -->
+                </p>
+                <P>
+                    <label>Password: </label>
+                    <input type="text" required> <!-- Add [(ngModel)]="user.password" -->
+                </P>
+                <button type="submit" [disabled]="!f.valid" routerLink='/user/1' class="btn btn-primary">Sign-In!</button>
+                <button routerLink='/registrationpage' class="btn btn-success">Don't have an account? Register!</button>
+            </form>
+        </div>
+    </div>
+</div>

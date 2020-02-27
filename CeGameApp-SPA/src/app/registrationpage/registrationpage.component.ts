@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./registrationpage.component.css']
 })
 export class RegistrationpageComponent {
+
+  onSubmit(){
+
+  }
 }
