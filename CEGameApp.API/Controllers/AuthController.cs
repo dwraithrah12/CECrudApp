@@ -18,29 +18,24 @@ namespace CEGameApp.API.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IUserRepository _userRepo;
+        private readonly ILoginService _loginService;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IUserRepository userRepo, ILoginService loginService)
         {
             _repo = repo;
             _config = config;
+            _userRepo = userRepo;
+            _loginService = loginService;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
-        {
-            //validate request
-            userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
-            
-            if (await _repo.UserExists(userForRegisterDto.UserName))
+        {            
+            if (await _repo.UserExists(userForRegisterDto.UserName.ToLower()))
                 return BadRequest("Username already exists");
+            await _userRepo.RegisterUser(userForRegisterDto.UserName.ToLower(), userForRegisterDto.Password);
             
-            var userToCreate = new Users
-            {
-                Name = userForRegisterDto.UserName
-            };
-
-            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
-
             return StatusCode(201);  //will change to createdatroute once we have a place to get data from
         }
 
@@ -53,37 +48,9 @@ namespace CEGameApp.API.Controllers
             if (userFromRepo == null)
                 return Unauthorized();
 
-            //***************  All of this to create a token to send to users logging in *******************
-            
-            //2 claims being sent back as part of token containing user Id and username
-            var claims = new[]
-            {
-                new Claim( ClaimTypes.NameIdentifier, userFromRepo.Id.ToString() ),
-                new Claim( ClaimTypes.Name, userFromRepo.Name)
-            };
+            var token = _loginService.GenerateToken(userFromRepo);
 
-            //creating security key
-            var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config.GetSection("AppSettings:Token").Value));
-
-            //attaching key as part of signing credentials that's encrypted
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            //creating first part of token with claims, expiration date and security credentials.
-            var tokenDescriptor = new SecurityTokenDescriptor 
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return Ok(new{
-                token = tokenHandler.WriteToken(token)
-            });
+            return Ok(token);
         }
     }
 }

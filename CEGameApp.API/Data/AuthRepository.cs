@@ -58,9 +58,8 @@ namespace CEGameApp.API.Data
             return user;
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            //from IDisposable, will dispose of the resources in curly braces once done with them.
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
                 passwordSalt = hmac.Key; //generate key to salt the hash

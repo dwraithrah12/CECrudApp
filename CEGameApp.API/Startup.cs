@@ -28,7 +28,8 @@ namespace CEGameApp.API
             services.AddControllers();
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
-            //authentication scheme for app
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
