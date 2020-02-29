@@ -6,8 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./sign-in-page.component.css']
 })
 export class SignInPageComponent {
+  signInInfo: any = {};
 
-  onSubmit(){
-
+  onSubmit() {
+    console.log(this.signInInfo);
   }
 }

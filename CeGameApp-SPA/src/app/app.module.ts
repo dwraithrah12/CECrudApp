@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomepageComponent } from './homepage/homepage.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
-
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
     CharacterListComponent,
     HomepageComponent,
     DropdownDirective,
-    SignInPageComponent
+    SignInPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +39,7 @@ import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
