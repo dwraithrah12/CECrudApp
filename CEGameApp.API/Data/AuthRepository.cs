@@ -29,12 +29,9 @@ namespace CEGameApp.API.Data
 
         private bool VerifiedPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            //from IDisposable, will dispose of the resources in curly braces once done with them.
             //passing passwordSalt to generate key
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
-                //System.Text... turns password into byte array.  Pass it to ComputeHash to generate hash out of password.
-                //Since hash had salt passed to it, it hashes the password correctly. 
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < computedHash.Length; i++)
                 {
