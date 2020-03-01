@@ -1,0 +1,19 @@
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-xs-12">
+            <h1>Sign-In</h1>
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+                <p>
+                    <label>User Name: </label>
+                    <input class="form-control mr-sm-2" type="text" name="userName" required [(ngModel)]="signInInfo.userName">
+                </p>
+                <P>
+                    <label>Password: </label>
+                    <input class="form-control mr-sm-2" type="password" name="Password" required [(ngModel)]="signInInfo.Password"> 
+                </P>
+                <button type="submit" class="btn btn-primary my-2 my-sm-0" (click)="onSubmit()" [disabled]="!loginForm.valid" routerLink='/user/1'>Sign-In!</button>
+                <button type="button" class="btn btn-success my-2 my-sm-0"  routerLink='/registrationpage' >Don't have an account? Register!</button>
+            </form>
+        </div>
+    </div>
+</div>
